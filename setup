@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+docker container rm -f myAlpine nginx myJDK
+docker image pull debian
+docker image pull nginx
+docker image rm alpine jdk
