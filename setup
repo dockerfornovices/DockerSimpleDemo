@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+# This material is free software for demonstration purposes only.
+
+# Copyright (c) 2018 PaperCut Software International Pty. Ltd.
+#  https://www.papercut.com
+#
+# Use of this source code is governed by an MIT license.
+# See the project's LICENSE file for more information.
+
+# Setup local docker envirobment to start the talk
+
 docker container rm -f myAlpine nginx myJDK
 docker image pull debian
 docker image pull nginx
