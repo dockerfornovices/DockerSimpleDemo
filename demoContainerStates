@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+
+# This material is free software for demonstration purposes only.
+
+# Copyright (c) 2018 PaperCut Software International Pty. Ltd.
+#  https://www.papercut.com
+#
+# Use of this source code is governed by an MIT license.
+# See the project's LICENSE file for more information.
+
+# Show the various states a container can be in.
+
+# NOTE: The comands used below to start containers are slightly
+# different to the examples given in the slides as a scripted
+# process works a bit differently (instead of having two terminals
+# open)
+
+docker container rm -f myAlpine > /dev/null 2>&1
+
+echo
+read -p 'Start a container ("docker container run -d --name myAlpine alpine")'
+echo
+
+docker container run -d --name myAlpine alpine  /bin/sh -c 'while true ; do echo $(( m += 1 )); sleep 5; done'
+
+echo
+read -p "Use the command \"docker container ls\" to see some basic information about all containers"
+echo
+docker container ls
+
+echo
+
+echo 'Look at the detailed state of our container called "myAlpine" with the command'
+echo
+read -p '    docker container inspect myAlpine'
+echo
+
+docker container inspect myAlpine 
+
+echo
+read -p 'and now more usefully run    "docker container inspect myAlpine|less"'
+echo
+
+docker container inspect myAlpine |less
+
+echo
+
+echo to make life a bit easier we can just extract the container status with the command
+echo
+echo "       docker container inspect --format {{.State.Status}} myAlpine"
+echo 
+docker container inspect --format {{.State.Status}} myAlpine
+echo
+
+echo "now let's stop the container with the stop command (will take some time to kill the blocked process)"
+
+echo
+read -p "     docker container stop myAlpine"
+echo
+
+docker container stop myAlpine
+
+echo
+
+echo the command \"docker container ls\" shows
+
+echo
+
+docker container ls
+
+echo
+echo the status from the inspect command is 
+echo 
+
+docker container inspect --format {{.State.Status}} myAlpine
+
+echo so why didn\'t \"docker container ls\" tell us that?
+echo
+read -p "try \"docker container ls -a\" instead"
+echo
+docker container ls -a
+echo
+echo We can restart a \"exited\" container
+echo
+read -p "try \"docker container restart myAlpine\""
+echo
+
+docker container restart myAlpine
+
+read -p "and now the status is"
+echo
+
+docker container inspect --format {{.State.Status}} myAlpine
+
+echo
+echo Now the container is running again we can attach our terminal to it
+echo
+read -p "   docker container attach myAlpine"
+echo
+echo NOTE: Hit Ctrl-c when you get bored
+
+docker container attach myAlpine
+
+
+echo
+echo So how to really get rid of a container? It has to be removed
+
+read -p "    docker container rm myAlpine"
+echo 
+
+docker container rm myAlpine
+
+echo
+echo and now \"docker container ls -a\" and \"docker container inspect --format {{.State.Status}} myAlpine\" say the correct thing
+echo
+
+docker container ls -a
+
+echo
+
+
+docker container inspect --format {{.State.Status}} myAlpine
+
+echo
+echo and we are done!
+
+
