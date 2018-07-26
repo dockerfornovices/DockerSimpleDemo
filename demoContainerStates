@@ -15,11 +15,19 @@
 # process works a bit differently (instead of having two terminals
 # open)
 
+
+echo
+echo This script will demostrate some of the lifecycle states a container can have
+echo and some of the commands you can use to manage containers. Please make sure to
+echo read the Docker manuals and the many tutorials for detailed and complete information.
+
+
 docker container rm -f myAlpine > /dev/null 2>&1
 
 echo
 read -p 'Start a container ("docker container run -d --name myAlpine alpine")'
 echo
+echo '(there is some shell magic used so that the container prints digits every 5 seconds -- look at the script for details)'
 
 docker container run -d --name myAlpine alpine  /bin/sh -c 'while true ; do echo $(( m += 1 )); sleep 5; done'
 
@@ -48,7 +56,9 @@ echo
 echo to make life a bit easier we can just extract the container status with the command
 echo
 echo "       docker container inspect --format {{.State.Status}} myAlpine"
-echo 
+echo
+echo "which displays"
+echo
 docker container inspect --format {{.State.Status}} myAlpine
 echo
 
@@ -74,6 +84,7 @@ echo
 
 docker container inspect --format {{.State.Status}} myAlpine
 
+echo
 echo so why didn\'t \"docker container ls\" tell us that?
 echo
 read -p "try \"docker container ls -a\" instead"
@@ -82,11 +93,12 @@ docker container ls -a
 echo
 echo We can restart a \"exited\" container
 echo
-read -p "try \"docker container restart myAlpine\""
+read -p "with the command \"docker container restart myAlpine\""
 echo
 
 docker container restart myAlpine
 
+echo
 read -p "and now the status is"
 echo
 
@@ -102,8 +114,14 @@ echo NOTE: Hit Ctrl-c when you get bored
 docker container attach myAlpine
 
 
+echo container status is
 echo
-echo So how to really get rid of a container? It has to be removed
+docker container inspect --format {{.State.Status}} myAlpine
+
+echo
+echo So now the the myAlpine container is exited, but
+echo how to really get rid of a container? It has to be removed
+echo
 
 read -p "    docker container rm myAlpine"
 echo 
@@ -124,4 +142,7 @@ docker container inspect --format {{.State.Status}} myAlpine
 echo
 echo and we are done!
 
+echo 
 
+echo sometimes you want to remove a container that us still running, without bothering to stop it first
+echo use the \"-f\" option, as in \"docker container rm -f myAlpine\"
