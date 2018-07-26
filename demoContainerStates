@@ -15,6 +15,9 @@
 # process works a bit differently (instead of having two terminals
 # open)
 
+# Thanks to @vissree (https://github.com/vissree/) for some great ideas to improve this script
+
+
 
 echo
 echo This script will demostrate some of the lifecycle states a container can have
