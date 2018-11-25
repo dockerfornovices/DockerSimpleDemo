@@ -2,8 +2,7 @@
 
 # This material is free software for demonstration purposes only.
 
-# Copyright (c) 2018 PaperCut Software International Pty. Ltd.
-#  https://www.papercut.com
+# Copyright (c) 2018 Alec Clews
 #
 # Use of this source code is governed by an MIT license.
 # See the project's LICENSE file for more information.
@@ -32,7 +31,7 @@ read -p 'Start a container ("docker container run -d --name myAlpine alpine")'
 echo
 echo '(there is some shell magic used so that the container prints digits every 5 seconds -- look at the script for details)'
 
-docker container run -d --name myAlpine alpine  /bin/sh -c 'while true ; do echo $(( m += 1 )); sleep 5; done'
+docker container run -d --name myAlpine alpine  /bin/sh -c 'while echo $(( m += 1 )); do  sleep 5; done'
 
 echo
 read -p "Use the command \"docker container ls\" to see some basic information about all containers"

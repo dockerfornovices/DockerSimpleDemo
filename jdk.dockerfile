@@ -2,18 +2,19 @@
 
 # This material is free software for demonstration purposes only.
 
-# Copyright (c) 2018 PaperCut Software International Pty. Ltd.
-#  https://www.papercut.com
+# Copyright (c) 2018 Alec Clews <alecclews@gmail.com>
 #
 # Use of this source code is governed by an MIT license.
 # See the project's LICENSE file for more information.
 
-FROM debian
+FROM alpine
 
-LABEL maintainer  "Alec Clews <alec.clews@papercut.com>"
+LABEL maintainer  "Alec Clews <alecclews@pgmail.com>"
 LABEL description "Linux with JDK"
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --yes \
-  openjdk-8-jdk
+RUN apk update && \
+    apk add openjdk8
+
+# ENV PATH=${PATH}:/usr/lib/jvm/java-1.8-openjdk/bin  JAVA_HOME=/usr/lib/jvm-1.8-openjdk
 
 CMD ["javac", "-version"]
