@@ -1,1 +1,4 @@
-registry-data/
+/registry-data/
+/serverCode/go.*
+/serverCode/main
+/volumes/
