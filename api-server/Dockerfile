@@ -2,7 +2,7 @@ FROM golang:1.11.2 as builder
 
 WORKDIR /development
 
-COPY api-server/main.go .
+COPY main.go .
 
 RUN go mod init github.com/HakaseLabs/source-blog/blob/master/rest-api/main.go && \
     go get -u ...  && \
