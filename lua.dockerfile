@@ -1,15 +1,14 @@
 FROM alpine:latest
 
-# Build this image with "docker image build -f lua.dockerfile  --tag luadev ."
+# Build this image with "docker image build -f lua.dockerfile  --tag luadev <context>"
 # then run with "docker container run --rm -it --name myLuadev luadev"
 
+# Add some meta data -- these are expected minimum
 LABEL maintainer  "Alec Clews <alecclews@gmail.com>"
 LABEL description "Linux with Lua"
 
-RUN apk add --update lua
+# Add content to the base Alpine image
+RUN apk add --no-cache lua
 
-RUN (echo password; echo password) | adduser -h code developer
-
-USER developer:developer
-
-CMD ["/bin/sh", "-i"]
+# Add a default startup command
+CMD ["/bin/sh"]
