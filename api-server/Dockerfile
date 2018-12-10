@@ -9,10 +9,10 @@ RUN curl --output main.go https://raw.githubusercontent.com/HakaseLabs/source-bl
 
 FROM alpine as runner
 
-RUN apk add --update libc6-compat
+RUN apk add --no-cache libc6-compat
 
 COPY --from=builder /development/main .
 
 CMD ["./main"]
 
-EXPOSE 80
+EXPOSE 8000
