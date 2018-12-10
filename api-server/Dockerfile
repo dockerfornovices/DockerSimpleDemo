@@ -8,7 +8,7 @@ RUN go mod init github.com/HakaseLabs/source-blog/blob/master/rest-api/main.go &
     go get -u ...  && \
     go build main.go
 
-FROM alpine as runner
+FROM alpine:3.8 as runner
 
 RUN apk add --no-cache libc6-compat
 
