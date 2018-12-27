@@ -10,8 +10,8 @@
 
 # Setup local docker envirobment to start the talk
 
-docker container rm -f myAlpine nginx myJDK
+docker container rm -f myAlpine
 
-docker image rm alpine jdk
+docker image rm alpine
 
-docker image pull nginx
+docker image pull
