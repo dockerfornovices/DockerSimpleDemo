@@ -1,7 +1,7 @@
 FROM alpine:latest
 
-# Build this image with "docker image build -f lua.dockerfile  --tag luadev <context>"
-# then run with "docker container run --rm -it --name myLuadev luadev"
+# Build this image with some version of "docker image build -f sqlite3.dockerfile -t alecthegeek/sqlite:0.1 ."
+# then run with some version of "docc run --rm -it --mount type=volume,source=db-demo,target=/data alecthegeek/sqlite:0.1 $'create table t1  (c1 varchar(20));'"
 
 # Add some meta data -- these are expected minimum
 LABEL maintainer  "Alec Clews <alecclews@gmail.com>"
