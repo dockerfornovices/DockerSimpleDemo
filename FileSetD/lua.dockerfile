@@ -15,8 +15,12 @@ RUN ln /usr/bin/luarocks-5.1 /usr/bin/luarocks
 # RUN luarocks install luaxmlrpc  mqtt
 RUN luarocks install LuaSocket PenLight mqtt
 
+# Create a user account inside the container
 RUN (echo password; echo password) | adduser -h code developer
 
+# make the new user the default user when the container start
 USER developer:developer
+
+# Add in the 
 
 CMD ["/bin/sh", "-i"]

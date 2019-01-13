@@ -17,3 +17,6 @@ ENTRYPOINT ["/usr/bin/sqlite3", "-echo",  "/data/sqlite.db"]
 
 # Add a default SQLite command
 CMD [".schema"]
+
+# Add the data volume mount point
+VOLUME [ "/data" ]

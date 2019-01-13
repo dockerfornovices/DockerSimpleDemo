@@ -1,9 +1,10 @@
-FROM alpine:latest
+# Start with an up to date version of Alpine. Be sepecific with the versiont tag
+FROM alpine:3.8
 
 # Build this image with "docker image build -f lua.dockerfile  --tag luadev <context>"
 # then run with "docker container run --rm -it --name myLuadev luadev"
 
-# Add some meta data -- these are expected minimum
+# Add some meta data -- these are expected minimum for every image.
 LABEL maintainer  "Alec Clews <alecclews@gmail.com>"
 LABEL description "Linux with Lua"
 
@@ -15,3 +16,6 @@ WORKDIR /code
 
 # Add a default startup command
 CMD ["/bin/sh"]
+
+# Add a volume to hold the development code
+VOLUME /code

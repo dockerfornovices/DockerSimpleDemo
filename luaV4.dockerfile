@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.8
 ARG LUA_PROD=5.2
 ARG LUA_VERSION=${LUA_PROD}
 
@@ -15,3 +15,4 @@ RUN apk add --no-cache lua5.1 lua5.2 lua5.3
 COPY lua.profile /root/.profile
 
 CMD ["/bin/sh", "-l"]
+
