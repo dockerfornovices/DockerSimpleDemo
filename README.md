@@ -1,4 +1,7 @@
 # n00b's  guide to Docker
+
+[![Join the chat at https://gitter.im/DockerSimpleDemo/community](https://badges.gitter.im/DockerSimpleDemo/community.svg)](https://gitter.im/DockerSimpleDemo/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## A simple introduction to Docker for novices
 
 These files support a short talk by @alecthegeek to introduce junior developers
