@@ -1,4 +1,6 @@
-FROM alpine:latest
+FROM alpine:3.8
+
+#Read the install bersion from --build-arg options default to 5.3
 ARG LUA_VERSION=5.3
 
 #Build this image with "docker image build -f lua.dockerfile --build-arg VERSION=<x.y> --tag luadev:<x.y> ."

@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.8
 
 # Much content adapted fron https://hub.docker.com/r/abaez/lua/~/dockerfile/
 

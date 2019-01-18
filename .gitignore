@@ -2,3 +2,4 @@
 /serverCode/go.*
 /serverCode/main
 /volumes/
+/FileSetB/luaCode/example1.lua

@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.8
 
 #Build this image with "docker image build -f lua.dockerfile  --tag luadev2 ."
 #then run with "docker container run --rm -it --name myLuadev luadev"
