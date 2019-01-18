@@ -1,8 +1,8 @@
 FROM alpine:latest
 ARG LUA_VERSION=5.3
 
-# Build this image with "docker image build -f luaV3.dockerfile --build-arg VERSION=<x.y> --tag luadev3 ."
-# then run with "docker container run --rm -it --name myLuadev luadev3"
+#Build this image with "docker image build -f lua.dockerfile --build-arg VERSION=<x.y> --tag luadev:<x.y> ."
+#then run with "docker container run --rm -it --name myLuadev luadev:<x.y"
 
 LABEL maintainer  "Alec Clews <alecclews@gmail.com>"
 LABEL description "Linux with Lua"

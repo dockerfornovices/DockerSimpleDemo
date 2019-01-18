@@ -1,7 +1,7 @@
 FROM alpine:latest
 
-# Build this image with "docker image build -f luaV2.dockerfile  --tag luadev ."
-# then run with "docker container run --rm -it --name myLuadev luadev"
+#Build this image with "docker image build -f lua.dockerfile  --tag luadev2 ."
+#then run with "docker container run --rm -it --name myLuadev luadev"
 
 LABEL maintainer  "Alec Clews <alecclews@gmail.com>"
 LABEL description "Linux with Lua"
