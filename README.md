@@ -5,25 +5,20 @@
 ## A simple introduction to Docker for novices
 
 These files support a short workshop by @alecthegeek to introduce junior developers
-and other novices to Docker concepts and basic commands.
+and other novices to Docker concepts and basic commands. Refer to the 
+associated [workbook](https://github.com/dockerfornovices/DockerSimpleDemo/wiki/WorkBook) for more information.
 
-Slides at 
+Some familiarity with Linux and the command line is assumed, but no
+previous knowledge of Docker is required.
 
 
-NOTE: This repo does not follow best pratices. It's merly a bunch of simple
-files to allow me to show some demos during the talk
 
-* `setup` -- remove some images so demos work correctly. Run before starting talk
-* `index.html` -- demo file for bind mount when running Nginx, from https://github.com/BretFisher/udemy-docker-mastery/blob/master/dockerfile-sample-2/index.html
-* `jdk.dockerfile` -- simple docker file to install the JDK in a Docker image
-* `docker-compose.yml` -- example Compose file from https://github.com/BretFisher/udemy-docker-mastery/blob/master/compose-sample-1/compose-3.yml
-* `shell2Moby` -- get a shell prompt on the Docker host machine for demo purposes. See https://www.bretfisher.com/docker-for-mac-commands-for-getting-into-local-docker-vm/
-
-Special Thanks to @BretFisher for most of the examples, taken from his
-[Docker Mastery](https://www.udemy.com/docker-mastery/?couponCode=2018DOCKERMASTERY301) course.
+This material is too short to teach you everything you need.
+I recommend taking a look at @BretFisher's Udemy course 
+[Docker Mastery](http://dockermastery.com/) if you want to get up to speed.
+Note this is not a paid referral, I'm just a happy student.
 
 All original created content in this repository is licensed under the MIT license. See the LICENSE file
 for details.
 
-For other licences please refer to the links supplied above.
 

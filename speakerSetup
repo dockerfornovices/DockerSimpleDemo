@@ -10,8 +10,35 @@
 
 # Setup local docker envirobment to start the talk
 
-docker container rm -f myAlpine
+IMAGES=$(echo "alpine:latest \
+    dockerfornovices/sqlite:0.1 \
+    dockerfornovices/lua-dev:latest \
+    dockerfornovices/api-server:latest \
+    $(wget -qO - https://raw.githubusercontent.com/BretFisher/udemy-docker-mastery/master/compose-sample-1/compose-3.yml |
+sed -nEe '/^[[:space:]]*image:[[:space:]]+(.+)$/s//\1/p'|sort -u|tr "\n" " ")" | tr " " "\n" |
+sed -Ee 's/^([^:]+)$/\1:latest/' | tr "\n" " ")
 
-docker image rm alpine
+printf "Image list is:\n$(echo $IMAGES | tr " " "\n")\n"
 
-docker image pull
+[[ $(docker container ls -aq | wc -l) -gt 0 ]]  && echo Remove all running containers && docker container rm -f $(docker container ls -aq)
+[[ $(docker volume ls -q | wc -l) -gt 0 ]]  && echo Remove all volumes && docker container volume rm $(docker volume ls -q)
+
+REQUIRED_NETWORKS="bridge host none"
+
+for n in $(docker network ls --format '{{.Name}}') ; do
+  if [[ $REQUIRED_NETWORKS =~ $n ]] ;then
+    echo keep network $n
+  else
+    echo delete network $n
+    docker network rm $n
+  fi
+done
+
+for i in $(docker image  ls --format '{{.Repository}}:{{.Tag}}') ; do
+  if [[ ! $IMAGES =~ $i ]] ; then 
+    echo Remove image $i 
+    docker image rm -f $i
+  fi
+done
+
+for i in $IMAGES ; do echo ; docker image pull $i;  done
