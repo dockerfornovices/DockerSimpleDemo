@@ -93,12 +93,12 @@ read -p "try \"docker container ls -a\" instead"
 echo
 docker container ls -a
 echo
-echo We can restart a \"exited\" container
+echo We can start a \"exited\" container
 echo
-read -p "with the command \"docker container restart myAlpine\""
+read -p "with the command \"docker container start myAlpine\""
 echo
 
-docker container restart myAlpine
+docker container start myAlpine
 
 echo
 read -p "and now the status is"
@@ -114,7 +114,6 @@ echo
 echo NOTE: Hit Ctrl-c when you get bored
 
 docker container attach myAlpine
-
 
 echo container status is
 echo

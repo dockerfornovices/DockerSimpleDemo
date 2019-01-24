@@ -6,19 +6,12 @@
 
 These files support a short workshop by @alecthegeek to introduce junior developers
 and other novices to Docker concepts and basic commands. Refer to the 
-associated [workbook](https://github.com/dockerfornovices/DockerSimpleDemo/wiki/WorkBook) for more information.
+associated [wiki](https://github.com/dockerfornovices/DockerSimpleDemo/wiki/) for more information.
+
+It was first presented in it's current form at Linux Conf Australia in January 2019.
 
 Some familiarity with Linux and the command line is assumed, but no
 previous knowledge of Docker is required.
 
-
-
-This material is too short to teach you everything you need.
-I recommend taking a look at @BretFisher's Udemy course 
-[Docker Mastery](http://dockermastery.com/) if you want to get up to speed.
-Note this is not a paid referral, I'm just a happy student.
-
-All original created content in this repository is licensed under the MIT license. See the LICENSE file
+All original content in this repository is licensed under the MIT license. See the LICENSE file
 for details.
-
-
