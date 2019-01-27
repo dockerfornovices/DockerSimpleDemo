@@ -15,3 +15,7 @@ RUN ln -s /usr/bin/luac${LUA_VERSION} /usr/bin/luac && \
     ln -s /usr/bin/lua${LUA_VERSION} /usr/bin/lua
 
 CMD ["/bin/sh"]
+
+# Add a volume to hold the development code
+VOLUME ["/code"]
+ 
