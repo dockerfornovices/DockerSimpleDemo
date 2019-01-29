@@ -13,9 +13,7 @@ RUN apk add --no-cache lua
 
 # Add a coding directory for Bind Mount
 WORKDIR /code
-
-# Add a default startup command
-CMD ["/bin/sh"]
-
 # Add a volume to hold the development code
 VOLUME /code
+
+# Default startup command from base image
