@@ -1,4 +1,6 @@
-FROM golang:1.11.5 as builder
+ARG GO_VERSION=1.14
+ARG RUNNER_VERSION=3.11
+FROM golang:${GO_VERSION} as builder
 
 WORKDIR /development
 
@@ -8,7 +10,7 @@ RUN go mod init github.com/HakaseLabs/source-blog/blob/master/rest-api/main.go &
     go get -u ...  && \
     go build main.go
 
-FROM alpine:3.8 as runner
+FROM alpine:${RUNNER_VERSION} as runner
 
 RUN apk add --no-cache libc6-compat curl
 
@@ -18,6 +20,6 @@ CMD ["./main"]
 
 EXPOSE 8000
 
-# Use "docc inspect --format '{{.State.Health.Status}}' <ID>"" to check the health status
+# Use "docker container inspect --format '{{.State.Health.Status}}' <ID>"" to check the health status
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=1 \
     CMD ["/bin/sh", "-c", "curl http://127.0.0.1:8000/people || exit 1" ]
