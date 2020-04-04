@@ -21,5 +21,5 @@ CMD ["./main"]
 EXPOSE 8000
 
 # Use "docker container inspect --format '{{.State.Health.Status}}' <ID>"" to check the health status
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=1 \
+HEALTHCHECK --interval=30s --timeout=30s --start-period=1s --retries=1 \
     CMD ["/bin/sh", "-c", "curl http://127.0.0.1:8000/people || exit 1" ]
