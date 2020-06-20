@@ -5,8 +5,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
@@ -62,6 +64,13 @@ func DeletePersonEndpoint(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+	apiPort := "8000"
+
+	if p, present := os.LookupEnv("API_SERVER_PORT"); present {
+		apiPort = p
+	}
+
 	router := mux.NewRouter()
 	log.Printf("Starting API server")
 	people = append(people, Person{ID: "1", Firstname: "John", Lastname: "Doe", Address: &Address{City: "City X", State: "State X"}})
@@ -70,5 +79,5 @@ func main() {
 	router.HandleFunc("/people/{id}", GetPersonEndpoint).Methods("GET")
 	router.HandleFunc("/people/{id}", CreatePersonEndpoint).Methods("POST")
 	router.HandleFunc("/people/{id}", DeletePersonEndpoint).Methods("DELETE")
-	log.Fatal(http.ListenAndServe(":8000", router))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", apiPort), router))
 }
