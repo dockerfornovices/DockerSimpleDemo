@@ -72,7 +72,7 @@ func main() {
 	}
 
 	router := mux.NewRouter()
-	log.Printf("Starting API server")
+	log.Printf("Starting API server on port %v", apiPort)
 	people = append(people, Person{ID: "1", Firstname: "John", Lastname: "Doe", Address: &Address{City: "City X", State: "State X"}})
 	people = append(people, Person{ID: "2", Firstname: "Koko", Lastname: "Doe", Address: &Address{City: "City Z", State: "State Y"}})
 	router.HandleFunc("/people", GetPeopleEndpoint).Methods("GET")
