@@ -16,4 +16,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build --file FileSetA/Dockerfile --tag api-server:latest FileSetA
+      run: docker build --file FileSetA/Dockerfile --tag ghcr.io/dockerfornovices/api-server:latest FileSetA
