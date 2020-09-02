@@ -20,7 +20,7 @@ jobs:
     - uses: mr-smithers-excellent/docker-build-push@v4
       name: Build & push Docker image
       with:
-        image: dockerfornovices/api-server
+        image: FileSetA/api-server
         tag: lastest  
         registry: docker.pkg.github.com
         dockerfile: FileSetA/Dockerfile
