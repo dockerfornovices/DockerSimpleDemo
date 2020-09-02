@@ -15,5 +15,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build --file FileSetA/Dockerfile --tag ghcr.io/dockerfornovices/api-server:latest FileSetA
+      
+    - uses: mr-smithers-excellent/docker-build-push@v4
+      with:
+        image: dockerfornovices/api-server:latest
+        registry: docker.pkg.github.com
+        # githubOrg: override-org # optional
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }} 
