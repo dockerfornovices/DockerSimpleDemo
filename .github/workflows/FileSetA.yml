@@ -15,11 +15,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      name: Check out code
       
     - uses: mr-smithers-excellent/docker-build-push@v4
+      name: Build & push Docker image
       with:
-        image: dockerfornovices/api-server:latest
+        image: dockerfornovices/api-server
+        tag: lastest  
         registry: docker.pkg.github.com
+        dockerfile: Dockerfile
+        directory: FileSetA    
         # githubOrg: override-org # optional
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }} 
