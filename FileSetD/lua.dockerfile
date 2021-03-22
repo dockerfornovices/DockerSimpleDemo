@@ -10,7 +10,7 @@ RUN apk add --no-cache lua5.1 lua5.2 lua5.3
 
 COPY lua.profile /root/.profile
 
-CMD ["/bin/sh", "-l"]
+ENTRYPOINT ["/bin/sh", "-l"]
 
 # Add a volume to hold the development code
 VOLUME ["/code"]
