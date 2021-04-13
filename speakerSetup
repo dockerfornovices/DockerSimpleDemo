@@ -10,18 +10,18 @@
 
 # Setup local docker envirobment to start the talk
 
-IMAGES=$(echo "alpine:latest \
+IMAGES="alpine:latest \
     dockerfornovices/sqlite:0.1 \
     dockerfornovices/lua-dev:latest \
     dockerfornovices/api-server:latest \
-    $(wget -qO - https://raw.githubusercontent.com/BretFisher/udemy-docker-mastery/master/compose-sample-1/compose-3.yml |
-sed -nEe '/^[[:space:]]*image:[[:space:]]+(.+)$/s//\1/p'|sort -u|tr "\n" " ")" | tr " " "\n" |
-sed -Ee 's/^([^:]+)$/\1:latest/' | tr "\n" " ")
+    $(cat docker-compose/docker/dev-compose.yaml |
+sed -nEe '/^[[:space:]]*image:[[:space:]]+(.+)$/s//\1/p' | sort -u |
+sed -Ee 's/^([^:]+)$/\1:latest/' | tr "\n" " ")"
 
-printf "Image list is:\n$(echo $IMAGES | tr " " "\n")\n"
+printf "Image list is:\n$(echo $IMAGES | tr ' ' '\n')\n"
 
 [[ $(docker container ls -aq | wc -l) -gt 0 ]]  && echo Remove all running containers && docker container rm -f $(docker container ls -aq)
-[[ $(docker volume ls -q | wc -l) -gt 0 ]]  && echo Remove all volumes && docker container volume rm $(docker volume ls -q)
+[[ $(docker volume ls -q | wc -l) -gt 0 ]]  && echo Remove all volumes && docker volume rm $(docker volume ls -q)
 
 REQUIRED_NETWORKS="bridge host none"
 

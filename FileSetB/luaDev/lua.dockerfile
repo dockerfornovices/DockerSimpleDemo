@@ -17,3 +17,7 @@ WORKDIR /code
 VOLUME /code
 
 # Default startup command from base image
+
+CMD "/bin/sh" "-l"
+
+WORKDIR /code

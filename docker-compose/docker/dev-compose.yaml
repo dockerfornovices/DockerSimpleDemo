@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  database:
+    image: mongo:4
+    networks:
+      - mongo-net
+    volumes:
+      - type: volume
+        source: db-data
+        target: /data/db
+    command: --serviceExecutor adaptive
+    healthcheck:
+      test: ["CMD", "/usr/bin/mongo", "--eval", "db.adminCommand( { ping:1 } )"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  shell:
+    build:
+      context: ./
+      dockerfile: mongo-shell.dockerfile
+    command:  /bin/sh -c "
+      while ! /usr/bin/mongo --host database --eval 'db.adminCommand( { ping:1 } )'; do 
+        sleep 1.0 ;
+      done ;
+      /usr/bin/mongo --host database"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    volumes:
+      - type: bind
+        source: ../db-scripts
+        target: /development
+    networks:
+      - mongo-net
+    depends_on:
+      - database
+
+  python:
+    build:
+      context: ../src
+      dockerfile: ../docker/python.dockerfile
+    environment:
+      - MONGO_HOST=database
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    volumes:
+      - type: bind
+        source: ../src
+        target: /development
+    networks:
+      - mongo-net
+    depends_on:
+      - database
+    
+volumes:
+  db-data:
+
+networks:
+  mongo-net:
+    name: mongo-net

@@ -3,3 +3,7 @@
 /serverCode/main
 /volumes/
 /FileSetB/luaCode/example1.lua
+.mongorc.js
+.dbshell
+.devcontainer/
+.vscode

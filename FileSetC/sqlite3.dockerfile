@@ -1,4 +1,4 @@
-FROM alpine:3.11
+FROM alpine:3
 
 # Build this image with some version of "docker image build -f sqlite3.dockerfile -t alecthegeek/sqlite:0.1 ."
 # then run with some version of "docc run --rm -it --mount type=volume,source=db-demo,target=/data alecthegeek/sqlite:0.1 $'create table t1  (c1 varchar(20));'"

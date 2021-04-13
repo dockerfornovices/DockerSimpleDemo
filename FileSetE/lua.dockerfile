@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3
 
 #Read the install bersion from --build-arg options default to 5.3
 ARG LUA_VERSION=5.3
@@ -16,6 +16,8 @@ RUN ln -s /usr/bin/luac${LUA_VERSION} /usr/bin/luac && \
 
 # Add a volume to hold the development code
 VOLUME ["/code"]
+
+WORKDIR "/code"
 
 # Inherit CMD from parent image
  
