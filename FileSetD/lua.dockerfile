@@ -1,19 +1,21 @@
 FROM alpine:3
 
-#Build this image with "docker image build -f lua.dockerfile  --tag luadev2 ."
-#then run with "docker container run --rm -it --name myLuadev luadev"
+#Build this image with "docker image build -f lua.dockerfile  --tag lua-dev ."
+#then run with "docker container run --rm -it --name myLuadev lua-dev"
 
 LABEL maintainer  "Alec Clews <alecclews@gmail.com>"
-LABEL description "Linux with Lua"
+LABEL description "Linux with Lua, Versions 5.1, 5.3 and 5.3"
 
 RUN apk add --no-cache lua5.1 lua5.2 lua5.3
 
-COPY lua.profile /root/.profile
+# Setup up file will configure the correct version
+COPY lua.setup.sh /etc/profile.d/lua.setup.sh
 
-ENTRYPOINT ["/bin/sh", "-i"]
+# -l option to force profile setup scripts to run
+ENTRYPOINT ["/bin/sh", "-l"]
 
-# Add a volume to hold the development code
+# Add a volume to hold the development code (optional)
 VOLUME ["/code"]
 
-#make thde code directory the default on startup
+#make the code directory the default on startup
 WORKDIR "/code"
