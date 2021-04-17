@@ -9,10 +9,14 @@ LABEL description "Linux with Lua, Versions 5.1, 5.3 and 5.3"
 RUN apk add --no-cache lua5.1 lua5.2 lua5.3
 
 # Setup up file will configure the correct version
-COPY lua.setup.sh /etc/profile.d/lua.setup.sh
+COPY lua.setup.sh /lua.setup.sh
+
+ENV ENV /lua.setup.sh
+
+RUN chmod 755 /lua.setup.sh
 
 # -l option to force profile setup scripts to run
-ENTRYPOINT ["/bin/sh", "-l"]
+ENTRYPOINT ["/bin/sh"]
 
 # Add a volume to hold the development code (optional)
 VOLUME ["/code"]
