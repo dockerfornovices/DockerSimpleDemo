@@ -13,7 +13,8 @@ COPY lua.setup.sh /lua.setup.sh
 ENV ENV /lua.setup.sh
 RUN chmod 755 /lua.setup.sh
 
-ENTRYPOINT ["/bin/sh"]
+# Default starup command
+CMD ["/bin/sh"]
 
 # Add a volume to hold the development code
 VOLUME ["/code"]

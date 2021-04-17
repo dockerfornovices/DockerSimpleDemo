@@ -11,12 +11,12 @@ LABEL description "Linux with Lua, Versions 5.1, 5.3 and 5.3"
 
 RUN apk add --no-cache lua5.1 lua5.2 lua5.3
 
-# Setup up file will configure the correct version of Lua
+# Setup up file will configure the correct version of Lua based on value of $LUA_VERSION_ENV
 COPY lua.setup.sh /lua.setup.sh
 ENV ENV /lua.setup.sh
 RUN chmod 755 /lua.setup.sh
 
-ENTRYPOINT ["/bin/sh"]
+CMD ["/bin/sh"]
 
 # Add a volume to hold the development code
 VOLUME ["/code"]
