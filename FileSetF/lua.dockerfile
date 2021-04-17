@@ -1,27 +1,25 @@
 FROM alpine:3
 
-#Build this image with "docker image build -f lua.dockerfile  --tag luadev2 ."
-#then run with "docker container run --rm -it --name myLuadev luadev"
-
-# Default version if no version at buildtime
 ARG LUA_VERSION=5.3
+ENV LUA_VERSION_ENV=${LUA_VERSION}
 
-# Export the default version into the container at run time
-ENV DEFAULT_LUA_VERSION=${LUA_VERSION}
+#Build this image with 'docker image build --tag lua-dev-f:5.1 --build-arg "LUA_VERSION=5.1" -f FileSetF/lua.dockerfile FileSetF'
+#then run with "docker container run --rm -it --name myLuadev lua-dev"
 
 LABEL maintainer  "Alec Clews <alecclews@gmail.com>"
-LABEL description "Linux with Lua"
+LABEL description "Linux with Lua, Versions 5.1, 5.3 and 5.3"
 
 RUN apk add --no-cache lua5.1 lua5.2 lua5.3
 
-ENV ENV=/opt/.env
+# Setup up file will configure the correct version of Lua
+COPY lua.setup.sh /lua.setup.sh
+ENV ENV /lua.setup.sh
+RUN chmod 755 /lua.setup.sh
 
-COPY lua.profile /opt/.env
-
-ENTRYPOINT ["/bin/sh"] 
+ENTRYPOINT ["/bin/sh"]
 
 # Add a volume to hold the development code
 VOLUME ["/code"]
 
-#make thde code directory the default on startup
+# Make the code directory the default on startup
 WORKDIR "/code"

@@ -1,7 +1,6 @@
-FROM alpine:3.8
+FROM alpine:3
 
 # Much content adapted fron https://hub.docker.com/r/abaez/lua/~/dockerfile/
-
 
 LABEL maintainer  "Alec Clews <alecclews@gmail.com>"
 LABEL description "Linux with Lua"
@@ -9,9 +8,8 @@ LABEL description "Linux with Lua"
 LABEL org.label-schema.description "Simple Lua development environment"
 LABEL org.label-schema.name "LuaDev"
 
-
-ENV LUA_MAJOR_VERSION 5.1
-ENV LUA_MINOR_VERSION 5
+ENV LUA_MAJOR_VERSION 5
+ENV LUA_MINOR_VERSION 1
 ENV LUA_VERSION ${LUA_MAJOR_VERSION}.${LUA_MINOR_VERSION}
 
 # Dependencies. use --update to refresh the package index
@@ -21,7 +19,7 @@ RUN curl -L http://www.lua.org/ftp/lua-${LUA_VERSION}.tar.gz | tar xzf - && \
     cd /lua-$LUA_VERSION && \
     make linux test  && \
     make install  && \
-    rm /lua-$LUA_VERSION -rf
+    rm -rf /lua-$LUA_VERSION
 
 RUN (echo password; echo password) | adduser -h code developer
 

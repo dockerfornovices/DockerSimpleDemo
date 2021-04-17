@@ -1,6 +1,6 @@
-# Setup Lua version. Default to 5.3
+# Setup Lua version. Default comes from dockerfile
 
-THIS_LUA=${LUA_VERSION:-5.3}
+THIS_LUA=${LUA_VERSION_ENV}
 
 mkdir /tmp/bin
 PATH=/tmp/bin:$PATH  # Make sure our custom links are 1st on PATH
