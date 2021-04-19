@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Autobuild the Image on Docker Hub with advanced options and buildx for multiarch images
+# read more: https://github.com/Tob1asDocker/dockerhubhooksexample
+
+set -ex
+
+echo "### RUN pre_build START: QEMU and buildx ###"
+
+# docker settings
+#export DOCKER_CLI_EXPERIMENTAL=enabled
+#export DOCKER_BUILDKIT=1
+
+# need binfmt-support and qemu-user-static
+#apt-get update && apt-get install -y qemu-user-static binfmt-support
+#docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+docker run --rm --privileged multiarch/qemu-user-static:register --reset
+#docker run --rm --privileged tonistiigi/binfmt --install all
+
+# docker buildx settings
+#docker buildx create --name multiarchbuilder
+#docker buildx use multiarchbuilder
+docker buildx create --use --name multiarchbuilder
+#docker buildx inspect --bootstrap
+docker buildx ls
+
+echo "### RUN pre_build END ###"
