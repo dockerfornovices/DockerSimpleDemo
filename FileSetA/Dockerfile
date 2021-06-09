@@ -6,7 +6,7 @@ WORKDIR /development
 
 COPY main.go .
 
-RUN go mod init github.com/dockerfornovices/DockerSimpleDemo/blob/main/FileSetA/main.go && \
+RUN go mod init github.com/dockerfornovices/DockerSimpleDemo/blob/main/FileSetA && \
     go get -u ...  && \
     go build main.go
 
