@@ -14,6 +14,7 @@ IMAGES="alpine:latest \
     dockerfornovices/sqlite:0.1 \
     dockerfornovices/lua-dev:latest \
     dockerfornovices/api-server:latest \
+    gcr.io/google.com/cloudsdktool/cloud-sdk:slim \
     $(cat docker-compose/docker/dev-compose.yaml |
 sed -nEe '/^[[:space:]]*image:[[:space:]]+(.+)$/s//\1/p' | sort -u |
 sed -Ee 's/^([^:]+)$/\1:latest/' | tr "\n" " ")"
