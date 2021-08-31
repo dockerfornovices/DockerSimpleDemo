@@ -1,6 +1,6 @@
 # Novices guide to Docker
 
-[![Join the chat at https://gitter.im/DockerSimpleDemo/community](https://badges.gitter.im/DockerSimpleDemo/community.svg)](https://gitter.im/DockerSimpleDemo/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/DockerSimpleDemo/community.svg)](https://gitter.im/DockerSimpleDemo/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ## A simple introduction to Docker for novices
 
