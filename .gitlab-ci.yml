@@ -15,7 +15,7 @@ docker-build-figlet:
   image: docker:latest
   stage: build
   rules:
-    - if '"$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH"'
+    - if: '"$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH"'
       changes:
         - Figlet/Dockerfile
   variables:
@@ -28,6 +28,6 @@ docker-build-figlet:
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
-    - echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = $TAG"
-    - docker build --pull -t "$CI_REGISTRY_IMAGE${TAG}" .
+    - echo "Running on default branch '$CI_DEFAULT_BRANCH': $CI_REGISTRY_IMAGE${TAG}"
+    - docker build --pull -t "$CI_REGISTRY_IMAGE${TAG}" - < Figlet/Dockerfile
     - docker push "$CI_REGISTRY_IMAGE${TAG}"
