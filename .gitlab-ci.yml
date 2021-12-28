@@ -7,28 +7,23 @@
 
 # See also https://stackoverflow.com/questions/45517733/how-to-publish-docker-images-to-docker-hub-from-gitlab-ci
 
-stages:
-  - build
-
 docker-build-figlet:
-  # Use the official docker image.
-  image: docker:latest
   stage: build
+  image: docker:latest
+  services:
+    - docker:dind
   rules:
-    - if: '"$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH"'
+    - if: "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH"
       changes:
         - Figlet/Dockerfile
         - .gitlab-ci.yml
   variables:
-    CI_REGISTRY_IMAGE: $CI_REGISTRY/dockerfornovices/figlet
-    TAG : ":latest"
-  services:
-    - docker:dind
+    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/figlet:latest'
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
-    - echo Running on default branch '$CI_DEFAULT_BRANCH:' $CI_REGISTRY_IMAGE${TAG}
-    - docker build --pull -t "$CI_REGISTRY_IMAGE${TAG}" - < Figlet/Dockerfile
-    - docker push "$CI_REGISTRY_IMAGE${TAG}"
+    - echo Running on default branch '$CI_DEFAULT_BRANCH:' $CI_REGISTRY_IMAGE
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" - < Figlet/Dockerfile
+    - docker push "$CI_REGISTRY_IMAGE"
