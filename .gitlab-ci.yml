@@ -7,8 +7,8 @@
 
 # See also https://stackoverflow.com/questions/45517733/how-to-publish-docker-images-to-docker-hub-from-gitlab-ci
 
-# This template uses one generic job with conditional builds
-# for the default branch and all other (MR) branches.
+stages:
+  - build
 
 docker-build-figlet:
   # Use the official docker image.
