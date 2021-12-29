@@ -47,7 +47,7 @@ docker-build-sqlite:
   variables:
     CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/sqlite'
     DEFAULT_TAG: "0.1"
-    DOCKERFILE: "sqlite.dockerfile"
+    DOCKERFILE: "sqlite3.dockerfile"
     DOCKER_BUILD_CONTEXT: FileSetC
   <<: *build-template 
 
@@ -58,5 +58,25 @@ docker-build-lua-dev:
     DOCKERFILE: "lua.dockerfile"
     DOCKER_BUILD_CONTEXT: FileSetD
   <<: *build-template
+
+docker-build-counter:
+  variables:
+    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/counter'
+    DEFAULT_TAG: "0.1"
+    DOCKER_BUILD_CONTEXT: "-"
+  rules:
+     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+       changes:
+       - .gitlab-ci.yml
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+  script:
+    - echo Building Image $CI_REGISTRY_IMAGE
+    - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" ${DOCKER_BUILD_CONTEXT} <<EOF
+        FROM alpine:latest
+        CMD ["/bin/sh", "-c", "while echo \$(( i += 1));do sleep 5;done"]
+      EOF
+    - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
+    - docker image push --all-tags "$CI_REGISTRY_IMAGE"
 
 
