@@ -7,49 +7,41 @@
 
 # See also https://stackoverflow.com/questions/45517733/how-to-publish-docker-images-to-docker-hub-from-gitlab-ci
 
-docker-build-figlet:
+
+.build-template: &build-template
   stage: build
   image: docker:latest
   services:
     - docker:dind
-  variables:
-    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/figlet'
-    DEFAULT_TAG: "1.0"
-    DOCKER_BUILD_CONTEXT: "Figlet"
   rules:
      - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
        changes:
-       - ${DOCKERFILE}
+       - ${DOCKER_BUILD_CONTEXT}/${DOCKERFILE}
        - .gitlab-ci.yml
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
     - echo Building Image $CI_REGISTRY_IMAGE
-    - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" ${DOCKER_BUILD_CONTEXT} 
+    - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" -f ${DOCKERFILE} ${DOCKER_BUILD_CONTEXT}
     - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
     - docker image push --all-tags "$CI_REGISTRY_IMAGE"
 
+
+
+docker-build-figlet:
+  variables:
+    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/figlet'
+    DEFAULT_TAG: "1.0"
+    DOCKER_BUILD_CONTEXT: "Figlet"
+    DOCKERFILE: "Dockerfile"
+  <<: *build-template
+
 docker-build-api-server:
-  stage: build
-  image: docker:latest
-  services:
-    - docker:dind
   variables:
     CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/api-server'
     GO_VERSION: "1.14"
     DEFAULT_TAG: ${GO_VERSION}
     BUILD_ARGS: '--build-arg GO_VERSION=$GO_VERSION'
-    DOCKERFILE: "FileSetA/Dockerfile"
+    DOCKERFILE: "Dockerfile"
     DOCKER_BUILD_CONTEXT: FileSetA
-  rules:
-     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-       changes:
-       - ${DOCKERFILE}
-       - .gitlab-ci.yml
-  before_script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
-  script:
-    - echo Building Image $CI_REGISTRY_IMAGE
-    - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" $BUILD_ARGS $DOCKER_BUILD_CONTEXT 
-    - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
-    - docker image push --all-tags "$CI_REGISTRY_IMAGE"
+  <<: *build-template
