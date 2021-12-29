@@ -13,9 +13,9 @@ docker-build-figlet:
   services:
     - docker:dind
   variables:
-    - CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/figlet'
-    - DOCKERFILE: "Figlet/Dockerfile"
-    - DEFAULT_TAG: "1.0"
+    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/figlet'
+    DOCKERFILE: "Figlet/Dockerfile"
+    DEFAULT_TAG: "1.0"
   rules:
      - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
        changes:
@@ -35,11 +35,11 @@ docker-build-api-server:
   services:
     - docker:dind
   variables:
-    - CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/api-server'
-    - GO_VERSION: "1.14"
-    - DEFAULT_TAG: ${GO_VERSION}
-    - BUILD_ARGS: '--build-arg GO_VERSION=$GO_VERSION'
-    - DOCKERFILE: "FileSetA/Dockerfile"
+    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/api-server'
+    GO_VERSION: "1.14"
+    DEFAULT_TAG: ${GO_VERSION}
+    BUILD_ARGS: '--build-arg GO_VERSION=$GO_VERSION'
+    DOCKERFILE: "FileSetA/Dockerfile"
   rules:
      - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
        changes:
