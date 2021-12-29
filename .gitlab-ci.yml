@@ -12,11 +12,11 @@ docker-build-figlet:
   image: docker:latest
   services:
     - docker:dind
-#  rules:
-#    - if: '"$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH"'
-#      changes:
-#        - Figlet/Dockerfile
-#        - .gitlab-ci.yml
+  rules:
+     if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+       changes:
+       - Figlet/Dockerfile
+       - .gitlab-ci.yml
   variables:
     CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/figlet'
   before_script:
