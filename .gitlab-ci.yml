@@ -18,10 +18,11 @@ docker-build-figlet:
 #        - Figlet/Dockerfile
 #        - .gitlab-ci.yml
   variables:
-    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/figlet:latest'
+    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/figlet'
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
     - echo Running on default branch '$CI_DEFAULT_BRANCH:' $CI_REGISTRY_IMAGE
-    - docker build --pull -t "$CI_REGISTRY_IMAGE" - < Figlet/Dockerfile
-    - docker push "$CI_REGISTRY_IMAGE"
+    - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:1.0" - < Figlet/Dockerfile
+    - docker image tag "${CI_REGISTRY_IMAGE}:1.0" "${CI_REGISTRY_IMAGE}:latest"
+    - docker image push --all-tags "$CI_REGISTRY_IMAGE"
