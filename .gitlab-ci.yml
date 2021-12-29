@@ -12,17 +12,43 @@ docker-build-figlet:
   image: docker:latest
   services:
     - docker:dind
+  variables:
+    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/figlet'
+    DOCKERFILE: "Figlet/Dockerfile"
+    DEFAULT_TAG: "1.0"
   rules:
      - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
        changes:
-       - Figlet/Dockerfile
+       - ${DOCKERFILE}
        - .gitlab-ci.yml
-  variables:
-    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/figlet'
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
-    - echo Running on default branch '$CI_DEFAULT_BRANCH:' $CI_REGISTRY_IMAGE
-    - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:1.0" - < Figlet/Dockerfile
-    - docker image tag "${CI_REGISTRY_IMAGE}:1.0" "${CI_REGISTRY_IMAGE}:latest"
+    - echo Building Image $CI_REGISTRY_IMAGE
+    - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" - < $DOCKERFILE
+    - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
+    - docker image push --all-tags "$CI_REGISTRY_IMAGE"
+
+docker-build-api-server:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/api-server'
+    GO_VERSION: 1.14
+    DEFAULT_TAG: $GO_VERSION
+    BUILD_ARGS: "--build-arg GO_VERSION=$GO_VERSION"
+    DOCKERFILE: "FileSetA/Dockerfile"
+  rules:
+     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+       changes:
+       - ${DOCKERFILE}
+       - .gitlab-ci.yml
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+  script:
+    - echo Building Image $CI_REGISTRY_IMAGE
+    - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" $BUILD_ARGS  - < $DOCKERFILE
+    - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
     - docker image push --all-tags "$CI_REGISTRY_IMAGE"
