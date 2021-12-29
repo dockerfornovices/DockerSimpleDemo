@@ -20,8 +20,8 @@
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
     - echo Building Image $CI_REGISTRY_IMAGE
-    - echo docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" -f ${DOCKERFILE} ${DOCKER_BUILD_CONTEXT}
-    - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" -f ${DOCKERFILE} ${DOCKER_BUILD_CONTEXT}
+    - echo docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" -f ${DOCKER_BUILD_CONTEXT}/${DOCKERFILE} ${DOCKER_BUILD_CONTEXT}
+    - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" -f ${DOCKER_BUILD_CONTEXT}/${DOCKERFILE} ${DOCKER_BUILD_CONTEXT}
     - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
     - docker image push --all-tags "$CI_REGISTRY_IMAGE"
 
