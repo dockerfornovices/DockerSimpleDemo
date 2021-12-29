@@ -42,3 +42,21 @@ docker-build-api-server:
     DOCKERFILE: "Dockerfile"
     DOCKER_BUILD_CONTEXT: FileSetA
   <<: *build-template
+
+docker-build-sqlite:
+  variables:
+    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/sqlite'
+    DEFAULT_TAG: "0.1"
+    DOCKERFILE: "sqlite.dockerfile"
+    DOCKER_BUILD_CONTEXT: FileSetC
+  <<: *build-template 
+
+docker-build-lua-dev:
+  variables:
+    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/luadev'
+    DEFAULT_TAG: "0.1"
+    DOCKERFILE: "lua.dockerfile"
+    DOCKER_BUILD_CONTEXT: FileSetD
+  <<: *build-template
+
+
