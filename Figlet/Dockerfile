@@ -1,5 +1,5 @@
 FROM alpine:latest
 
-RUN  apk add --update-cache figlet && rm -rf /var/cache/apk/*
+RUN  apk add ---no-cache figlet
 
 ENTRYPOINT ["/usr/bin/figlet"]
