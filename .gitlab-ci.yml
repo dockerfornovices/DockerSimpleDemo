@@ -77,8 +77,8 @@ docker-build-counter:
   script:
     - echo Building Image $CI_REGISTRY_IMAGE
     - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" ${DOCKER_BUILD_CONTEXT} <<'      EOF'
-        FROM alpine:latest
-        CMD ["/bin/sh", "-c", "while echo $(( i += 1));do sleep 5;done"]
+        FROM alpine:latest \
+        CMD ["/bin/sh", "-c", "while echo $(( i += 1));do sleep 5;done"] \
       EOF
     - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
     - docker image push --all-tags "$CI_REGISTRY_IMAGE"
