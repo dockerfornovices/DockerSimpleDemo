@@ -3,10 +3,8 @@
 
 # Build a Docker image with CI/CD and push to the GitLab registry.
 # Docker-in-Docker documentation: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html
-#
 
 # See also https://stackoverflow.com/questions/45517733/how-to-publish-docker-images-to-docker-hub-from-gitlab-ci
-
 
 .build-template: &build-template
   stage: build
@@ -22,11 +20,10 @@
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
     - echo Building Image $CI_REGISTRY_IMAGE
+    - echo docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" -f ${DOCKERFILE} ${DOCKER_BUILD_CONTEXT}
     - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" -f ${DOCKERFILE} ${DOCKER_BUILD_CONTEXT}
     - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
     - docker image push --all-tags "$CI_REGISTRY_IMAGE"
-
-
 
 docker-build-figlet:
   variables:
