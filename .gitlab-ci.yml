@@ -64,6 +64,10 @@ docker-build-counter:
     CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/counter'
     DEFAULT_TAG: "0.1"
     DOCKER_BUILD_CONTEXT: "-"
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
   rules:
      - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
        changes:
@@ -78,5 +82,3 @@ docker-build-counter:
       EOF
     - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
     - docker image push --all-tags "$CI_REGISTRY_IMAGE"
-
-
