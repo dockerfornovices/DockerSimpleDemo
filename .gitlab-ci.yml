@@ -76,7 +76,7 @@ docker-build-counter:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
     - echo Building Image $CI_REGISTRY_IMAGE
-    - docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" ${DOCKER_BUILD_CONTEXT} <<'      EOF'
+    - cat <<'      EOF' | docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" ${DOCKER_BUILD_CONTEXT}
         FROM alpine:latest \
         CMD ["/bin/sh", "-c", "while echo $(( i += 1));do sleep 5;done"] \
       EOF
