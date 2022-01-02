@@ -78,11 +78,39 @@ docker-build-counter:
   - |
     docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" - <<EOF
       FROM alpine:latest
-      CMD ["/bin/sh", "-c", "while echo \$(( i += 1));do sleep 5;done"]
+      CMD ["/bin/sh", "-c", "trap exit SIGTERM; while echo \$(( i += 1));do sleep 5;done"]
       LABEL org.opencontainers.image.source="$CI_PROJECT_URL"
       LABEL org.opencontainers.image.created="$CI_JOB_STARTED_AT"
       LABEL org.opencontainers.image.licenses="MIT"
       LABEL org.opencontainers.image.description="A demo image that shows how to count"
+    EOF
+  - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
+  - docker image push --all-tags "$CI_REGISTRY_IMAGE"
+
+docker-build-fizzbuzz:
+  variables:
+    CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/fizzbuzz'
+    DEFAULT_TAG: "0.1"
+  stage: build
+  image: docker:latest
+  services:
+  - docker:dind
+  rules:
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    changes:
+    - .gitlab-ci.yml
+  before_script:
+  - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+  script:
+  - echo Building Image $CI_REGISTRY_IMAGE
+  - |
+    docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" - <<EOF
+      FROM alpine:latest
+      CMD ["/bin/sh", "-c", "trap exit SIGTERM; while [ $(( i += 1 )) ]; do  echo -n \"$i: \";([ $((i%15)) -eq 0 ] && echo FizzBuzz) || ([ $((i%3)) -eq 0 ] && echo Fizz ) || ([ $((i%5)) -eq 0 ] && echo Buzz ) || echo $i;sleep 1;done"]
+      LABEL org.opencontainers.image.source="$CI_PROJECT_URL"
+      LABEL org.opencontainers.image.created="$CI_JOB_STARTED_AT"
+      LABEL org.opencontainers.image.licenses="MIT"
+      LABEL org.opencontainers.image.description="A demo image that plays Fizz Buzz"
     EOF
   - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
   - docker image push --all-tags "$CI_REGISTRY_IMAGE"
