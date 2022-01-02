@@ -66,17 +66,17 @@ docker-build-counter:
   stage: build
   image: docker:latest
   services:
-    - docker:dind
+  - docker:dind
   rules:
-     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-       changes:
-       - .gitlab-ci.yml
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    changes:
+    - .gitlab-ci.yml
   before_script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+  - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
-    - echo Building Image $CI_REGISTRY_IMAGE
-    - |
-      docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" - <<'EOF'
+  - echo Building Image $CI_REGISTRY_IMAGE
+  - |
+    docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" - <<'EOF'
       FROM alpine:latest
       CMD ["/bin/sh", "-c", "while echo $(( i += 1));do sleep 5;done"]
       LABEL org.opencontainers.image.source="$CI_PROJECT_URL"
@@ -84,5 +84,5 @@ docker-build-counter:
       LABEL org.opencontainers.image.licenses="MIT"
       LABEL org.opencontainers.image.description="A demo image that shows how to count"
       EOF
-    - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
-    - docker image push --all-tags "$CI_REGISTRY_IMAGE"
+  - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
+  - docker image push --all-tags "$CI_REGISTRY_IMAGE"
