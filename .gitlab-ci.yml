@@ -76,9 +76,9 @@ docker-build-counter:
   script:
   - echo Building Image $CI_REGISTRY_IMAGE
   - |
-    docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" - <<'EOF'
+    docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" - <<EOF
       FROM alpine:latest
-      CMD ["/bin/sh", "-c", "while echo $(( i += 1));do sleep 5;done"]
+      CMD ["/bin/sh", "-c", "while echo \$(( i += 1));do sleep 5;done"]
       LABEL org.opencontainers.image.source="$CI_PROJECT_URL"
       LABEL org.opencontainers.image.created="$CI_JOB_STARTED_AT"
       LABEL org.opencontainers.image.licenses="MIT"
