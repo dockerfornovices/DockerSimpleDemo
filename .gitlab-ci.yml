@@ -63,7 +63,6 @@ docker-build-counter:
   variables:
     CI_REGISTRY_IMAGE: '$CI_REGISTRY/dockerfornovices/counter'
     DEFAULT_TAG: "0.1"
-    DOCKER_BUILD_CONTEXT: "-"
   stage: build
   image: docker:latest
   services:
@@ -77,9 +76,13 @@ docker-build-counter:
   script:
     - echo Building Image $CI_REGISTRY_IMAGE
     - |
-      cat <<'EOF' | docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" ${DOCKER_BUILD_CONTEXT}
+      docker image build --pull --tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" - <<'EOF'
       FROM alpine:latest
       CMD ["/bin/sh", "-c", "while echo $(( i += 1));do sleep 5;done"]
+      LABEL org.opencontainers.image.source="$CI_PROJECT_URL"
+      LABEL org.opencontainers.image.created="$CI_JOB_STARTED_AT"
+      LABEL org.opencontainers.image.licenses="MIT"
+      LABEL org.opencontainers.image.description="A demo image that shows how to count"
       EOF
     - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
     - docker image push --all-tags "$CI_REGISTRY_IMAGE"
