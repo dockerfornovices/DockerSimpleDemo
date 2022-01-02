@@ -83,6 +83,6 @@ docker-build-counter:
       LABEL org.opencontainers.image.created="$CI_JOB_STARTED_AT"
       LABEL org.opencontainers.image.licenses="MIT"
       LABEL org.opencontainers.image.description="A demo image that shows how to count"
-      EOF
+    EOF
   - docker image tag "${CI_REGISTRY_IMAGE}:${DEFAULT_TAG}" "${CI_REGISTRY_IMAGE}:latest"
   - docker image push --all-tags "$CI_REGISTRY_IMAGE"
