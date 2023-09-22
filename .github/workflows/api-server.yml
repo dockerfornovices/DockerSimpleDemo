@@ -5,6 +5,7 @@ on:
   push:
     paths:
     - FileSetA/**
+    - .github/workflows/api-server.yml
     branches:
      - 'main'
 
