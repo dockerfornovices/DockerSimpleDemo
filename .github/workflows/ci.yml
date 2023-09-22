@@ -7,8 +7,11 @@ on:
       - 'main'
 
 jobs:
-  docker:
+  api-server:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory:  FileSetA
     steps:
       -
         name: Set up Docker Buildx
@@ -24,5 +27,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          context: FileSetA
-          tags: 
+          tags: dockerfornovices/api-server
