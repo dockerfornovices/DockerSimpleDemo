@@ -23,6 +23,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context:  FileSetA
+          context:  "{{defaultContext}}:FileSetA"
           push: true
           tags: dockerfornovices/api-server
