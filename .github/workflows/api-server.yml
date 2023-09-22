@@ -25,4 +25,4 @@ jobs:
         with:
           context:  "{{defaultContext}}:FileSetA"
           push: true
-          tags: dockerfornovices/api-server:latest dockerfornovices/api-server:1.14
+          tags: dockerfornovices/api-server:latest, dockerfornovices/api-server:1.14
