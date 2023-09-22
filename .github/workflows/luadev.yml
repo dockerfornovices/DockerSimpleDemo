@@ -10,7 +10,7 @@ on:
      - 'main'
 
 jobs:
-  api-server:
+  luadev:
     runs-on: ubuntu-latest
     steps:
       -
