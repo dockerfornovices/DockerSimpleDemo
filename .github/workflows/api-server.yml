@@ -1,10 +1,12 @@
-name: ci
+name: api-server
 
 on:
   workflow_dispatch:
   push:
+    paths:
+    - FileSetA/**
     branches:
-      - 'main'
+     - 'main'
 
 jobs:
   api-server:
@@ -25,4 +27,5 @@ jobs:
         with:
           context:  "{{defaultContext}}:FileSetA"
           push: true
+          platforms: linux/amd64, linux/arm64
           tags: dockerfornovices/api-server:latest, dockerfornovices/api-server:1.14
