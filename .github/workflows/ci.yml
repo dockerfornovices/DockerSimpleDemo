@@ -9,9 +9,6 @@ on:
 jobs:
   api-server:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory:  FileSetA
     steps:
       -
         name: Set up Docker Buildx
