@@ -1,5 +1,5 @@
-ARG GO_VERSION=1.14
-ARG RUNNER_VERSION=3.11
+ARG GO_VERSION=1.21-alpine
+ARG RUNNER_VERSION=3
 FROM golang:${GO_VERSION} as builder
 
 WORKDIR /development
@@ -18,8 +18,6 @@ RUN apk add --no-cache libc6-compat curl
 COPY --from=builder /development/main .
 
 CMD ["./main"]
-
-EXPOSE 8000
 
 # Use "docker container inspect --format '{{.State.Health.Status}}' <ID>"" to check the health status
 HEALTHCHECK --interval=1s --timeout=1s --retries=1 \
